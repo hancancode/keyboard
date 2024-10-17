@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>키보드 형상화</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100vh;
+            background-color: #000000;
+            margin: 0;
+            overflow: hidden; /* 화면 전체는 스크롤 없음 */
+        }
+
+        .display-container {
+            flex-grow: 1;
+            overflow-y: auto; /* 텍스트 영역만 스크롤 가능 */
+            padding: 20px 100px;
+        }
+
+        .display {
+            width: calc(100% - 200px); /* 양 옆 마진 100px */
+            text-align: center;
+            font-size: 5vw; /* 윗 공간의 절반 크기 */
+            color: white;
+            background-color: #333333;
+            padding: 20px 0;
+            box-sizing: border-box;
+            min-height: 50px; /* 기본 텍스트 영역 */
+        }
+
+        .keyboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #000000;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .key {
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            height: 80px;
+            transition: all 0.2s ease;
+        }
+
+        .key-wide {
+            width: 200px;
+        }
+
+        .key-short {
+            width: 80px;
+        }
+
+        .active {
+            background-color: lightblue;
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="display-container">
+        <div class="display" id="display">여기에 글자가 표시됩니다</div>
+    </div>
+    <div class="keyboard">
+        <div class="row">
+            <div class="key key-short" data-keycode="27">Esc</div>
+            <div class="key key-short" data-keycode="112">F1</div>
+            <div class="key key-short" data-keycode="113">F2</div>
+            <div class="key key-short" data-keycode="114">F3</div>
+            <div class="key key-short" data-keycode="115">F4</div>
+            <div class="key key-short" data-keycode="116">F5</div>
+            <div class="key key-short" data-keycode="117">F6</div>
+            <div class="key key-short" data-keycode="118">F7</div>
+            <div class="key key-short" data-keycode="119">F8</div>
+            <div class="key key-short" data-keycode="120">F9</div>
+            <div class="key key-short" data-keycode="121">F10</div>
+            <div class="key key-short" data-keycode="122">F11</div>
+            <div class="key key-short" data-keycode="123">F12</div>
+        </div>
+        
+        <div class="row">
+            <div class="key key-short" data-keycode="192">~</div>
+            <div class="key key-short" data-keycode="49">1</div>
+            <div class="key key-short" data-keycode="50">2</div>
+            <div class="key key-short" data-keycode="51">3</div>
+            <div class="key key-short" data-keycode="52">4</div>
+            <div class="key key-short" data-keycode="53">5</div>
+            <div class="key key-short" data-keycode="54">6</div>
+            <div class="key key-short" data-keycode="55">7</div>
+            <div class="key key-short" data-keycode="56">8</div>
+            <div class="key key-short" data-keycode="57">9</div>
+            <div class="key key-short" data-keycode="48">0</div>
+            <div class="key key-short" data-keycode="189">-</div>
+            <div class="key key-short" data-keycode="187">=</div>
+            <div class="key key-short" data-keycode="8">⌫</div>
+        </div>
+        
+        <div class="row">
+            <div class="key key-short" data-keycode="9">Tab</div>
+            <div class="key key-short" data-keycode="81">Q</div>
+            <div class="key key-short" data-keycode="87">W</div>
+            <div class="key key-short" data-keycode="69">E</div>
+            <div class="key key-short" data-keycode="82">R</div>
+            <div class="key key-short" data-keycode="84">T</div>
+            <div class="key key-short" data-keycode="89">Y</div>
+            <div class="key key-short" data-keycode="85">U</div>
+            <div class="key key-short" data-keycode="73">I</div>
+            <div class="key key-short" data-keycode="79">O</div>
+            <div class="key key-short" data-keycode="80">P</div>
+            <div class="key key-short" data-keycode="219">[</div>
+            <div class="key key-short" data-keycode="221">]</div>
+            <div class="key key-short" data-keycode="220">\\</div>
+        </div>
+        
+        <div class="row">
+            <div class="key key-short" data-keycode="20">Caps</div>
+            <div class="key key-short" data-keycode="65">A</div>
+            <div class="key key-short" data-keycode="83">S</div>
+            <div class="key key-short" data-keycode="68">D</div>
+            <div class="key key-short" data-keycode="70">F</div>
+            <div class="key key-short" data-keycode="71">G</div>
+            <div class="key key-short" data-keycode="72">H</div>
+            <div class="key key-short" data-keycode="74">J</div>
+            <div class="key key-short" data-keycode="75">K</div>
+            <div class="key key-short" data-keycode="76">L</div>
+            <div class="key key-short" data-keycode="186">;</div>
+            <div class="key key-short" data-keycode="222">'</div>
+        </div>
+        
+        <div class="row">
+            <div class="key key-wide" data-keycode="16">Shift</div>
+            <div class="key key-short" data-keycode="90">Z</div>
+            <div class="key key-short" data-keycode="88">X</div>
+            <div class="key key-short" data-keycode="67">C</div>
+            <div class="key key-short" data-keycode="86">V</div>
+            <div class="key key-short" data-keycode="66">B</div>
+            <div class="key key-short" data-keycode="78">N</div>
+            <div class="key key-short" data-keycode="77">M</div>
+            <div class="key key-short" data-keycode="188">,</div>
+            <div class="key key-short" data-keycode="190">.</div>
+            <div class="key key-short" data-keycode="191">/</div>
+            <div class="key key-wide" data-keycode="16">Shift</div>
+        </div>
+        
+        <div class="row">
+            <div class="key key-short" data-keycode="112">Fn</div>
+            <div class="key key-short" data-keycode="17">Control</div>
+            <div class="key key-short" data-keycode="18">Option</div>
+            <div class="key key-short" data-keycode="91">Command</div>
+            <div class="key key-wide" data-keycode="32">Space</div>
+            <div class="key key-short" data-keycode="91">Command</div>
+            <div class="key key-short" data-keycode="18">Option</div>
+            <div class="key key-short" data-keycode="37">←</div>
+            <div class="key key-short" data-keycode="38">↑</div>
+            <div class="key key-short" data-keycode="40">↓</div>
+            <div class="key key-short" data-keycode="39">→</div>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+        const displayContainer = document.querySelector('.display-container');
+        let typedText = '';
+
+        document.addEventListener('keydown', (event) => {
+            const keycode = event.keyCode;
+            const key = event.key;
+
+            if (!["Shift", "Control", "Alt", "Meta", "CapsLock", "Tab", "Enter"].includes(key)) {
+                typedText += key;
+                display.textContent = typedText;
+                displayContainer.scrollTop = displayContainer.scrollHeight; // 항상 스크롤을 아래로
+            }
+
+            document.querySelectorAll('.key').forEach(k => {
+                if (k.getAttribute('data-keycode') == keycode) {
+                    k.classList.add('active');
+                }
+            });
+        });
+
+        document.addEventListener('keyup', (event) => {
+            const keycode = event.keyCode;
+
+            document.querySelectorAll('.key').forEach(k => {
+                if (k.getAttribute('data-keycode') == keycode) {
+                    k.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
